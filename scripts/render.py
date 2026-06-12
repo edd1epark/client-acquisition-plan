@@ -228,36 +228,38 @@ def search_matched_pages(out, params):
 # ---------------------------------------------------------------- per-prospect: comparison scenario
 def comparison_scenario(out, sc):
     import math
-    W, H = 1920, 1220
+    W, H = 1920, 1070
     pw = 880
+    stages = sc["stages"]
+    last = stages[-1]
     panels = [
         {"x": 60, "label": sc["typical_label"], "head": "#6B6E8C", "vkey": "t", "nkey": "t_note",
-         "cpc": sc["t_cpc"], "cpc_note": "", "bars": ["#9B9DDB", "#7B7DC9", "#5C5FB0", "#3D4097"],
-         "result_bg": "#F1F2F8", "result_col": NAVY, "badges": False},
+         "bars": ["#9B9DDB", "#7B7DC9", "#5C5FB0", "#3D4097"], "badges": False,
+         "top_val": str(last["t"]), "top_note": "", "top_col": DARK},
         {"x": 980, "label": sc["system_label"], "head": NAVY, "vkey": "s", "nkey": "s_note",
-         "cpc": sc["s_cpc"], "cpc_note": sc.get("s_cpc_note", ""), "bars": ["#7BCBA4", "#4FB983", "#2FA76C", "#1F9D61"],
-         "result_bg": "#E3F4EC", "result_col": OKGREEN, "badges": True},
+         "bars": ["#7BCBA4", "#4FB983", "#2FA76C", "#1F9D61"], "badges": True,
+         "top_val": str(last["s"]), "top_note": (sc.get("multiplier_badge", "") + " vs typical").strip(), "top_col": OKGREEN},
     ]
-    stages = sc["stages"]
     maxv = max(max(st["t"], st["s"]) for st in stages)
     k = 400 / math.log10(maxv)
     bar_h, bar_gap = 118, 30
     fy0 = 392
-    res_y = fy0 + len(stages)*(bar_h+bar_gap) + 18
+    panel_h = fy0 + len(stages)*(bar_h+bar_gap) - bar_gap + 40 - 60
     d = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
     for p in panels:
         x = p["x"]
-        d.append(f'<rect x="{x}" y="60" width="{pw}" height="{res_y + 128 - 36}" rx="22" fill="white" stroke="#E2E3EE" stroke-width="3"/>')
+        d.append(f'<rect x="{x}" y="60" width="{pw}" height="{panel_h}" rx="22" fill="white" stroke="#E2E3EE" stroke-width="3"/>')
         d.append(f'<rect x="{x+24}" y="84" width="{pw-48}" height="74" rx="14" fill="{p["head"]}"/>')
         d.append(f'<text x="{x+pw/2}" y="{84+48}" font-family="{FONT}" font-size="30" font-weight="bold" fill="white" text-anchor="middle">{esc(p["label"])}</text>')
         cw_ = (pw - 88 - 22) / 2
-        for ci, (clab, cval, cnote) in enumerate([("MONTHLY BUDGET", sc["budget"], ""), ("COST PER CLICK", p["cpc"], p["cpc_note"])]):
+        cards = [("MONTHLY BUDGET", sc["budget"], "", DARK), ("CONSULTATIONS / MONTH", p["top_val"], p["top_note"], p["top_col"])]
+        for ci, (clab, cval, cnote, ccol) in enumerate(cards):
             cx0 = x + 44 + ci*(cw_+22)
             d.append(f'<rect x="{cx0}" y="186" width="{cw_}" height="124" rx="16" fill="#FAFAFD" stroke="#E2E3EE" stroke-width="2"/>')
             d.append(f'<text x="{cx0+cw_/2}" y="226" font-family="{FONT}" font-size="20" font-weight="bold" fill="{LGRAY}" text-anchor="middle" letter-spacing="1">{clab}</text>')
-            d.append(f'<text x="{cx0+cw_/2}" y="272" font-family="{FONT}" font-size="40" font-weight="bold" fill="{DARK}" text-anchor="middle">{esc(cval)}</text>')
+            d.append(f'<text x="{cx0+cw_/2}" y="274" font-family="{FONT}" font-size="44" font-weight="bold" fill="{ccol}" text-anchor="middle">{esc(cval)}</text>')
             if cnote:
-                d.append(f'<text x="{cx0+cw_/2}" y="300" font-family="{FONT}" font-size="19" font-weight="bold" fill="{OKGREEN}" text-anchor="middle">{esc(cnote)}</text>')
+                d.append(f'<text x="{cx0+cw_/2}" y="302" font-family="{FONT}" font-size="19" font-weight="bold" fill="{OKGREEN}" text-anchor="middle">{esc(cnote)}</text>')
         cxm = x + pw/2
         widths = [math.log10(st[p["vkey"]]) * k for st in stages]
         for i, st in enumerate(stages):
@@ -275,14 +277,6 @@ def comparison_scenario(out, sc):
                 bx = x + pw - 44 - blen
                 d.append(f'<rect x="{bx}" y="{y+bar_h/2-20}" width="{blen}" height="40" rx="20" fill="{OKGREEN}"/>')
                 d.append(f'<text x="{bx+blen/2}" y="{y+bar_h/2+7}" font-family="{FONT}" font-size="20" font-weight="bold" fill="white" text-anchor="middle">{esc(st["badge"])}</text>')
-        last = stages[-1]
-        d.append(f'<rect x="{x+24}" y="{res_y}" width="{pw-48}" height="110" rx="16" fill="{p["result_bg"]}"/>')
-        d.append(f'<text x="{x+52}" y="{res_y+70}" font-family="{FONT}" font-size="56" font-weight="bold" fill="{p["result_col"]}">{last[p["vkey"]]}</text>')
-        rx_ = x + 52 + len(str(last[p["vkey"]]))*34 + 22
-        d.append(f'<text x="{rx_}" y="{res_y+68}" font-family="{FONT}" font-size="26" font-weight="bold" fill="{DARK}">{esc(sc[p["vkey"]+"_result"])}</text>')
-        if p["badges"] and sc.get("multiplier_badge"):
-            d.append(f'<rect x="{x+pw-44-150}" y="{res_y+28}" width="150" height="54" rx="27" fill="{OKGREEN}"/>')
-            d.append(f'<text x="{x+pw-44-75}" y="{res_y+64}" font-family="{FONT}" font-size="27" font-weight="bold" fill="white" text-anchor="middle">{esc(sc["multiplier_badge"])}</text>')
     d.append('</svg>')
     open(out, "w").write("".join(d))
 
