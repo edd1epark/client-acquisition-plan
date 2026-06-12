@@ -1,0 +1,24 @@
+{
+  "slug": "wlb",
+  "prospect": "White Lotus Bookkeeping",
+  "card1_example": "Directors of small nonprofits who need books cleaned up this month",
+  "seo_example_term": "nonprofit bookkeeping",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it shows your firm to a director at the moment they type the need.",
+  "search_rows": [
+    ["fund accounting for small nonprofits", "Fund Accounting for Small Nonprofits", "Restricted funds · Grant tracking · Clean books"],
+    ["990 filing help", "Form 990, Handled", "Prep · Filing · Deadlines"],
+    ["grant reporting bookkeeping", "Grant-Ready Books", "Reporting · Compliance · Audit trail"]
+  ],
+  "scenario": {
+    "typical_label": "Typical Google Ads performance",
+    "system_label": "Client acquisition system",
+    "budget": "$5,000",
+    "multiplier_badge": "2×",
+    "stages": [
+      {"label": "Clicks", "t": 333, "t_note": "at ~$15 per click", "s": 416, "s_note": "at ~$12 per click", "badge": "+25%"},
+      {"label": "Leads", "t": 10, "t_note": "3% of clicks", "s": 17, "s_note": "4% of clicks", "badge": "3% → 4%"},
+      {"label": "Qualified", "t": 6, "t_note": "no filter - 60%", "s": 12, "s_note": "filtered - 70%", "badge": "60% → 70%"},
+      {"label": "Showed", "t": 5, "t_note": "75% book & show", "s": 10, "s_note": "85% book & show", "badge": "75% → 85%"}
+    ]
+  }
+}
