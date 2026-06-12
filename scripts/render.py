@@ -122,17 +122,17 @@ def heatmap(out, vals=None):
     open(out, "w").write("".join(s))
 
 
-# ---------------------------------------------------------------- static: funnel
-def funnel(out):
+# ---------------------------------------------------------------- funnel (static default or per-prospect stages)
+def funnel(out, stages=None):
     import math
     W, H = 1920, 800
     x0 = 60; colw = 360; n = 5; gap = 14
     xb = [x0 + i*colw for i in range(n+1)]
-    stages = [("1,000", "Clicks", None, 1000), ("40", "Leads", "4% of clicks", 40),
+    stages = stages or [("1,000", "Clicks", None, 1000), ("40", "Leads", "4% of clicks", 40),
               ("30", "Qualified", "75% of leads", 30), ("20", "Showed calls", "67% book &amp; show", 20),
               ("5", "New clients", "25% close rate", 5)]
     cy = 520; k = 135
-    hs = [math.log10(v)*k for _, _, _, v in stages]
+    hs = [math.log10(max(v, 2))*k for _, _, _, v in stages]
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
     for i in range(1, n):
         s.append(f'<line x1="{xb[i]}" y1="70" x2="{xb[i]}" y2="745" stroke="#ECEDF5" stroke-width="2.5"/>')
@@ -299,6 +299,8 @@ def main():
     search_matched_pages(f"{svg_p}/search-matched-pages.svg", params)
     if params.get("heatmap_vals"):
         heatmap(f"{svg_p}/channel-fit-heatmap.svg", vals=params["heatmap_vals"])
+    if params.get("funnel_stages"):
+        funnel(f"{svg_p}/funnel-scenario.svg", stages=[tuple(st) for st in params["funnel_stages"]])
     if params.get("scenario"):
         comparison_scenario(f"{svg_p}/comparison-scenario.svg", params["scenario"])
 
