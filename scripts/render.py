@@ -227,38 +227,62 @@ def search_matched_pages(out, params):
 
 # ---------------------------------------------------------------- per-prospect: comparison scenario
 def comparison_scenario(out, sc):
-    W, H = 1920, 1180
-    panels = [
-        {"x": 60, "label": sc["typical_label"], "head": "#6B6E8C", "tkey": "t_val", "nkey": "t_note", "final": NAVY},
-        {"x": 980, "label": sc["system_label"], "head": NAVY, "tkey": "s_val", "nkey": "s_note", "final": OKGREEN},
-    ]
+    import math
+    W, H = 1920, 1220
     pw = 880
-    rows = sc["rows"]
-    row_y0, row_h = 210, 168
+    panels = [
+        {"x": 60, "label": sc["typical_label"], "head": "#6B6E8C", "vkey": "t", "nkey": "t_note",
+         "cpc": sc["t_cpc"], "cpc_note": "", "bars": ["#9B9DDB", "#7B7DC9", "#5C5FB0", "#3D4097"],
+         "result_bg": "#F1F2F8", "result_col": NAVY, "badges": False},
+        {"x": 980, "label": sc["system_label"], "head": NAVY, "vkey": "s", "nkey": "s_note",
+         "cpc": sc["s_cpc"], "cpc_note": sc.get("s_cpc_note", ""), "bars": ["#7BCBA4", "#4FB983", "#2FA76C", "#1F9D61"],
+         "result_bg": "#E3F4EC", "result_col": OKGREEN, "badges": True},
+    ]
+    stages = sc["stages"]
+    maxv = max(max(st["t"], st["s"]) for st in stages)
+    k = 400 / math.log10(maxv)
+    bar_h, bar_gap = 118, 30
+    fy0 = 392
+    res_y = fy0 + len(stages)*(bar_h+bar_gap) + 18
     d = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
     for p in panels:
         x = p["x"]
-        d.append(f'<rect x="{x}" y="60" width="{pw}" height="{row_y0 + len(rows)*row_h - 30}" rx="22" fill="white" stroke="#E2E3EE" stroke-width="3"/>')
+        d.append(f'<rect x="{x}" y="60" width="{pw}" height="{res_y + 128 - 36}" rx="22" fill="white" stroke="#E2E3EE" stroke-width="3"/>')
         d.append(f'<rect x="{x+24}" y="84" width="{pw-48}" height="74" rx="14" fill="{p["head"]}"/>')
         d.append(f'<text x="{x+pw/2}" y="{84+48}" font-family="{FONT}" font-size="30" font-weight="bold" fill="white" text-anchor="middle">{esc(p["label"])}</text>')
-        for i, r in enumerate(rows):
-            y = row_y0 + i*row_h
-            last = (i == len(rows)-1)
-            if last and p["final"] == OKGREEN:
-                d.append(f'<rect x="{x+14}" y="{y-14}" width="{pw-28}" height="{row_h-18}" rx="14" fill="#E3F4EC"/>')
-            d.append(f'<text x="{x+44}" y="{y+22}" font-family="{FONT}" font-size="22" font-weight="bold" fill="{LGRAY}" letter-spacing="1">{esc(r["label"])}</text>')
-            vcol = p["final"] if last else DARK
-            d.append(f'<text x="{x+44}" y="{y+82}" font-family="{FONT}" font-size="52" font-weight="bold" fill="{vcol}">{esc(r[p["tkey"]])}</text>')
-            note = r.get(p["nkey"]) or ""
-            if note:
-                d.append(f'<text x="{x+44}" y="{y+120}" font-family="{FONT}" font-size="24" fill="{GRAY}">{esc(note)}</text>')
-            if not last:
-                d.append(f'<line x1="{x+34}" y1="{y+row_h-24}" x2="{x+pw-34}" y2="{y+row_h-24}" stroke="{LINE}" stroke-width="2"/>')
-    if sc.get("multiplier_badge"):
-        bx = panels[1]["x"] + pw - 220
-        by = row_y0 + (len(rows)-1)*row_h + 30
-        d.append(f'<rect x="{bx}" y="{by}" width="170" height="56" rx="28" fill="{OKGREEN}"/>')
-        d.append(f'<text x="{bx+85}" y="{by+38}" font-family="{FONT}" font-size="28" font-weight="bold" fill="white" text-anchor="middle">{esc(sc["multiplier_badge"])}</text>')
+        cw_ = (pw - 88 - 22) / 2
+        for ci, (clab, cval, cnote) in enumerate([("MONTHLY BUDGET", sc["budget"], ""), ("COST PER CLICK", p["cpc"], p["cpc_note"])]):
+            cx0 = x + 44 + ci*(cw_+22)
+            d.append(f'<rect x="{cx0}" y="186" width="{cw_}" height="124" rx="16" fill="#FAFAFD" stroke="#E2E3EE" stroke-width="2"/>')
+            d.append(f'<text x="{cx0+cw_/2}" y="226" font-family="{FONT}" font-size="20" font-weight="bold" fill="{LGRAY}" text-anchor="middle" letter-spacing="1">{clab}</text>')
+            d.append(f'<text x="{cx0+cw_/2}" y="272" font-family="{FONT}" font-size="40" font-weight="bold" fill="{DARK}" text-anchor="middle">{esc(cval)}</text>')
+            if cnote:
+                d.append(f'<text x="{cx0+cw_/2}" y="300" font-family="{FONT}" font-size="19" font-weight="bold" fill="{OKGREEN}" text-anchor="middle">{esc(cnote)}</text>')
+        cxm = x + pw/2
+        widths = [math.log10(st[p["vkey"]]) * k for st in stages]
+        for i, st in enumerate(stages):
+            y = fy0 + i*(bar_h+bar_gap)
+            wt = widths[i]
+            wb = widths[i+1] if i < len(stages)-1 else widths[i]*0.86
+            col = p["bars"][i]
+            d.append(f'<polygon points="{cxm-wt/2},{y} {cxm+wt/2},{y} {cxm+wb/2},{y+bar_h} {cxm-wb/2},{y+bar_h}" fill="{col}"/>')
+            d.append(f'<text x="{x+44}" y="{y+bar_h/2-2}" font-family="{FONT}" font-size="28" font-weight="bold" fill="{DARK}">{esc(st["label"])}</text>')
+            d.append(f'<text x="{x+44}" y="{y+bar_h/2+32}" font-family="{FONT}" font-size="20" fill="{GRAY}">{esc(st[p["nkey"]])}</text>')
+            val_x = x + pw - (200 if p["badges"] else 44)
+            d.append(f'<text x="{val_x}" y="{y+bar_h/2+14}" font-family="{FONT}" font-size="42" font-weight="bold" fill="{DARK}" text-anchor="end">{st[p["vkey"]]}</text>')
+            if p["badges"] and st.get("badge"):
+                blen = len(st["badge"])*12.5 + 30
+                bx = x + pw - 44 - blen
+                d.append(f'<rect x="{bx}" y="{y+bar_h/2-20}" width="{blen}" height="40" rx="20" fill="{OKGREEN}"/>')
+                d.append(f'<text x="{bx+blen/2}" y="{y+bar_h/2+7}" font-family="{FONT}" font-size="20" font-weight="bold" fill="white" text-anchor="middle">{esc(st["badge"])}</text>')
+        last = stages[-1]
+        d.append(f'<rect x="{x+24}" y="{res_y}" width="{pw-48}" height="110" rx="16" fill="{p["result_bg"]}"/>')
+        d.append(f'<text x="{x+52}" y="{res_y+70}" font-family="{FONT}" font-size="56" font-weight="bold" fill="{p["result_col"]}">{last[p["vkey"]]}</text>')
+        rx_ = x + 52 + len(str(last[p["vkey"]]))*34 + 22
+        d.append(f'<text x="{rx_}" y="{res_y+68}" font-family="{FONT}" font-size="26" font-weight="bold" fill="{DARK}">{esc(sc[p["vkey"]+"_result"])}</text>')
+        if p["badges"] and sc.get("multiplier_badge"):
+            d.append(f'<rect x="{x+pw-44-150}" y="{res_y+28}" width="150" height="54" rx="27" fill="{OKGREEN}"/>')
+            d.append(f'<text x="{x+pw-44-75}" y="{res_y+64}" font-family="{FONT}" font-size="27" font-weight="bold" fill="white" text-anchor="middle">{esc(sc["multiplier_badge"])}</text>')
     d.append('</svg>')
     open(out, "w").write("".join(d))
 
