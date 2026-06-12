@@ -1,0 +1,24 @@
+{
+  "slug": "jjg",
+  "prospect": "Joe Gormley & Company",
+  "card1_example": "Owners of small NJ businesses who just opened an IRS letter with a deadline in it",
+  "seo_example_term": "CPA Princeton NJ",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it shows your firm to an owner at the moment they type the need.",
+  "search_rows": [
+    ["received CP2000 letter what to do NJ", "Got a CP2000 Letter? Here's What It Means", "What the letter says · Your deadline · How we respond"],
+    ["accountant for dental practice Princeton", "Accounting for Dental Practices", "Practice bookkeeping · Equipment write-offs · Year-round planning"],
+    ["S corp election deadline for new LLC", "S Corp Election: Deadlines for New LLCs", "Whether it fits · The filing window · What it saves"]
+  ],
+  "scenario": {
+    "typical_label": "Typical Google Ads performance",
+    "system_label": "Client acquisition system",
+    "budget": "$3,500",
+    "multiplier_badge": "2.3×",
+    "stages": [
+      {"label": "Clicks", "t": 233, "t_note": "at ~$15 per click", "s": 292, "s_note": "at ~$12 per click", "badge": "+25%"},
+      {"label": "Leads", "t": 7, "t_note": "3% of clicks", "s": 12, "s_note": "4% of clicks", "badge": "3% → 4%"},
+      {"label": "Qualified", "t": 4, "t_note": "no filter - 60%", "s": 8, "s_note": "filtered - 70%", "badge": "60% → 70%"},
+      {"label": "Showed", "t": 3, "t_note": "75% book & show", "s": 7, "s_note": "85% book & show", "badge": "75% → 85%"}
+    ]
+  }
+}
