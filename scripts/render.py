@@ -69,14 +69,14 @@ def chain_diagram(out):
 
 
 # ---------------------------------------------------------------- static: heatmap
-def heatmap(out):
+def heatmap(out, vals=None):
     W, H = 1920, 960
     mx, my = 40, 70
     lab_w = 400; cw = 205; hh = 100; rh = 136
     cols = ["Cold\noutreach", "Social\ncontent", "SEO", "LinkedIn\nads", "Meta\nads", "Google\nAds", "ChatGPT\nads"]
     rows = [["Reaches buyers", "in-window"], ["Works for niche,", "specific buyers"], ["Time to first", "pipeline"],
             ["Predictable", "&amp; scalable"], ["Effort required", "from you"]]
-    vals = [["R","R","G","R","R","G","G"], ["Y","Y","G","Y","R","G","G"], ["Y","R","R","Y","Y","G","G"],
+    vals = vals or [["R","R","G","R","R","G","G"], ["Y","Y","G","Y","R","G","G"], ["Y","R","R","Y","Y","G","G"],
             ["Y","R","Y","Y","Y","G","Y"], ["R","R","R","Y","Y","G","G"]]
     mat_w = lab_w + 7*cw; mat_h = hh + 5*rh
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
@@ -158,18 +158,18 @@ def channel_cards(out, params):
     cw, ch, gap = 925, 585, 35
     H = 20 + 2*ch + gap + 25
     positions = [(13, 20), (13+cw+gap, 20), (13, 20+ch+gap), (13+cw+gap, 20+ch+gap)]
-    card1_body = ("Interrupt people who aren't looking. They also need big audiences to work - "
+    card1_body = params.get("card1_body") or ("Interrupt people who aren't looking. They also need big audiences to work - "
                   "the delivery algorithms want roughly 200,000+ targetable decision-makers to learn who converts. "
                   f"“{params['card1_example']}” is a tiny fraction of that. The algorithm never gets enough signal.")
     cards = [
         {"title": "Meta &amp; LinkedIn ads", "logo": "metali", "body": card1_body},
         {"title": "SEO", "logo": "seo",
-         "body": ("The right idea: show up at the moment of search. But it takes 12+ months to rank, "
+         "body": params.get("seo_body") or ("The right idea: show up at the moment of search. But it takes 12+ months to rank, "
                   f"and the first page of “{params['seo_example_term']}” results is already spoken for.")},
         {"title": "ChatGPT ads", "logo": "gpt", "pill": ("SECONDARY FIT", NAVY),
          "body": "Work on the same capture logic as Google, on a brand-new auction. Worth a position early - we treat it as the second priority."},
         {"title": "Google Ads", "logo": "gads", "pill": ("PRIMARY FIT", OKGREEN), "ring": OKGREEN,
-         "body": "The only channel that scores green on the requirement that matters most: it shows your firm to a buyer at the moment they type the need."},
+         "body": params.get("card4_body") or "The only channel that scores green on the requirement that matters most: it shows your firm to a buyer at the moment they type the need."},
     ]
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
     for card, (px, py) in zip(cards, positions):
@@ -225,6 +225,44 @@ def search_matched_pages(out, params):
     open(out, "w").write("".join(d))
 
 
+# ---------------------------------------------------------------- per-prospect: comparison scenario
+def comparison_scenario(out, sc):
+    W, H = 1920, 1180
+    panels = [
+        {"x": 60, "label": sc["typical_label"], "head": "#6B6E8C", "tkey": "t_val", "nkey": "t_note", "final": NAVY},
+        {"x": 980, "label": sc["system_label"], "head": NAVY, "tkey": "s_val", "nkey": "s_note", "final": OKGREEN},
+    ]
+    pw = 880
+    rows = sc["rows"]
+    row_y0, row_h = 210, 168
+    d = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}"><rect width="{W}" height="{H}" fill="white"/>']
+    for p in panels:
+        x = p["x"]
+        d.append(f'<rect x="{x}" y="60" width="{pw}" height="{row_y0 + len(rows)*row_h - 30}" rx="22" fill="white" stroke="#E2E3EE" stroke-width="3"/>')
+        d.append(f'<rect x="{x+24}" y="84" width="{pw-48}" height="74" rx="14" fill="{p["head"]}"/>')
+        d.append(f'<text x="{x+pw/2}" y="{84+48}" font-family="{FONT}" font-size="30" font-weight="bold" fill="white" text-anchor="middle">{esc(p["label"])}</text>')
+        for i, r in enumerate(rows):
+            y = row_y0 + i*row_h
+            last = (i == len(rows)-1)
+            if last and p["final"] == OKGREEN:
+                d.append(f'<rect x="{x+14}" y="{y-14}" width="{pw-28}" height="{row_h-18}" rx="14" fill="#E3F4EC"/>')
+            d.append(f'<text x="{x+44}" y="{y+22}" font-family="{FONT}" font-size="22" font-weight="bold" fill="{LGRAY}" letter-spacing="1">{esc(r["label"])}</text>')
+            vcol = p["final"] if last else DARK
+            d.append(f'<text x="{x+44}" y="{y+82}" font-family="{FONT}" font-size="52" font-weight="bold" fill="{vcol}">{esc(r[p["tkey"]])}</text>')
+            note = r.get(p["nkey"]) or ""
+            if note:
+                d.append(f'<text x="{x+44}" y="{y+120}" font-family="{FONT}" font-size="24" fill="{GRAY}">{esc(note)}</text>')
+            if not last:
+                d.append(f'<line x1="{x+34}" y1="{y+row_h-24}" x2="{x+pw-34}" y2="{y+row_h-24}" stroke="{LINE}" stroke-width="2"/>')
+    if sc.get("multiplier_badge"):
+        bx = panels[1]["x"] + pw - 220
+        by = row_y0 + (len(rows)-1)*row_h + 30
+        d.append(f'<rect x="{bx}" y="{by}" width="170" height="56" rx="28" fill="{OKGREEN}"/>')
+        d.append(f'<text x="{bx+85}" y="{by+38}" font-family="{FONT}" font-size="28" font-weight="bold" fill="white" text-anchor="middle">{esc(sc["multiplier_badge"])}</text>')
+    d.append('</svg>')
+    open(out, "w").write("".join(d))
+
+
 # ---------------------------------------------------------------- main
 def main():
     params = json.load(open(sys.argv[1]))
@@ -239,6 +277,10 @@ def main():
     funnel(f"{svg_static}/funnel-scenario.svg")
     channel_cards(f"{svg_p}/channel-cards.svg", params)
     search_matched_pages(f"{svg_p}/search-matched-pages.svg", params)
+    if params.get("heatmap_vals"):
+        heatmap(f"{svg_p}/channel-fit-heatmap.svg", vals=params["heatmap_vals"])
+    if params.get("scenario"):
+        comparison_scenario(f"{svg_p}/comparison-scenario.svg", params["scenario"])
 
     for svg_dir, png_dir in ((svg_static, png_static), (svg_p, png_p)):
         for f in sorted(os.listdir(svg_dir)):

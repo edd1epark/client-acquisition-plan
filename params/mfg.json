@@ -1,0 +1,33 @@
+{
+  "slug": "mfg",
+  "prospect": "Midwest Financial Group",
+  "card1_body": "Interrupt people who aren't looking. Consumer audiences are big enough for the algorithms - but the ads reach families before the need triggers, and until it does, nobody's switching. Good for staying visible. Less reliable for catching the moment.",
+  "seo_body": "The right idea: show up at the moment of search. But it takes 12+ months to rank, and the first page of “financial advisor Madison” results is already spoken for.",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it shows your firm to a family at the moment they type the need.",
+  "card1_example": "",
+  "seo_example_term": "",
+  "heatmap_vals": [
+    ["R", "R", "G", "R", "R", "G", "G"],
+    ["Y", "Y", "G", "Y", "Y", "G", "G"],
+    ["Y", "R", "R", "Y", "Y", "G", "G"],
+    ["Y", "R", "Y", "Y", "Y", "G", "Y"],
+    ["R", "R", "R", "Y", "Y", "G", "G"]
+  ],
+  "search_rows": [
+    ["RSU vesting after company acquisition", "RSUs After an Acquisition", "Vesting timelines · Tax windows · What not to sell"],
+    ["retire at 62 health insurance before Medicare", "Retiring Before 65", "Bridge coverage · ACA vs COBRA · Medicare timing"],
+    ["small business owner retirement plan options", "Retirement Plans for Business Owners", "SEP vs 401(k) · Tax deferral · Succession"]
+  ],
+  "scenario": {
+    "typical_label": "Typical Google Ads performance",
+    "system_label": "Client acquisition system",
+    "multiplier_badge": "2.2×",
+    "rows": [
+      {"label": "MONTHLY AD SPEND", "t_val": "$10,000", "t_note": "", "s_val": "$10,000", "s_note": "same budget"},
+      {"label": "CLICKS", "t_val": "667", "t_note": "at ~$15 per click", "s_val": "833", "s_note": "~25% more - cheaper long-tail clicks"},
+      {"label": "LEADS (FORMS OR PHONE CALLS)", "t_val": "20", "t_note": "3% of clicks", "s_val": "33", "s_note": "4% of clicks"},
+      {"label": "QUALIFIED", "t_val": "12", "t_note": "no filter - 60%", "s_val": "23", "s_note": "filtered - 70%"},
+      {"label": "SHOWED CONSULTATIONS", "t_val": "9", "t_note": "75% book & show", "s_val": "20", "s_note": "85% book & show"}
+    ]
+  }
+}
