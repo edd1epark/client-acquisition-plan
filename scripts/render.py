@@ -268,15 +268,17 @@ def comparison_scenario(out, sc):
             wb = widths[i+1] if i < len(stages)-1 else widths[i]*0.86
             col = p["bars"][i]
             d.append(f'<polygon points="{cxm-wt/2},{y} {cxm+wt/2},{y} {cxm+wb/2},{y+bar_h} {cxm-wb/2},{y+bar_h}" fill="{col}"/>')
-            d.append(f'<text x="{x+44}" y="{y+bar_h/2-2}" font-family="{FONT}" font-size="28" font-weight="bold" fill="{DARK}">{esc(st["label"])}</text>')
-            d.append(f'<text x="{x+44}" y="{y+bar_h/2+32}" font-family="{FONT}" font-size="20" fill="{GRAY}">{esc(st[p["nkey"]])}</text>')
-            val_x = x + pw - (200 if p["badges"] else 44)
-            d.append(f'<text x="{val_x}" y="{y+bar_h/2+14}" font-family="{FONT}" font-size="42" font-weight="bold" fill="{DARK}" text-anchor="end">{st[p["vkey"]]}</text>')
-            if p["badges"] and st.get("badge"):
-                blen = len(st["badge"])*12.5 + 30
-                bx = x + pw - 44 - blen
-                d.append(f'<rect x="{bx}" y="{y+bar_h/2-20}" width="{blen}" height="40" rx="20" fill="{OKGREEN}"/>')
-                d.append(f'<text x="{bx+blen/2}" y="{y+bar_h/2+7}" font-family="{FONT}" font-size="20" font-weight="bold" fill="white" text-anchor="middle">{esc(st["badge"])}</text>')
+            d.append(f'<text x="{x+44}" y="{y+bar_h/2+10}" font-family="{FONT}" font-size="28" font-weight="bold" fill="{DARK}">{esc(st["label"])}</text>')
+            d.append(f'<text x="{cxm}" y="{y+bar_h/2+16}" font-family="{FONT}" font-size="44" font-weight="bold" fill="white" text-anchor="middle">{st[p["vkey"]]}</text>')
+            if p["badges"]:
+                d.append(f'<text x="{x+pw-44}" y="{y+bar_h/2-16}" font-family="{FONT}" font-size="26" font-weight="bold" fill="{DARK}" text-anchor="end">{esc(st[p["nkey"]])}</text>')
+                if st.get("badge"):
+                    blen = len(st["badge"])*14 + 36
+                    bx = x + pw - 44 - blen
+                    d.append(f'<rect x="{bx}" y="{y+bar_h/2+2}" width="{blen}" height="46" rx="23" fill="{OKGREEN}"/>')
+                    d.append(f'<text x="{bx+blen/2}" y="{y+bar_h/2+33}" font-family="{FONT}" font-size="23" font-weight="bold" fill="white" text-anchor="middle">{esc(st["badge"])}</text>')
+            else:
+                d.append(f'<text x="{x+pw-44}" y="{y+bar_h/2+10}" font-family="{FONT}" font-size="26" font-weight="bold" fill="{DARK}" text-anchor="end">{esc(st[p["nkey"]])}</text>')
     d.append('</svg>')
     open(out, "w").write("".join(d))
 
