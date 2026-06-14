@@ -1,0 +1,19 @@
+{
+  "slug": "tallyz",
+  "prospect": "Tallyz",
+  "card1_example": "Small business owners ready to hire a fractional CFO this month",
+  "seo_example_term": "fractional CFO for small business",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it shows your practice to an owner at the moment they type the need.",
+  "search_rows": [
+    ["fractional CFO for construction companies", "Construction CFO Services", "Job costing · Contractor cash flow · WIP & profitability"],
+    ["cash flow help for small business", "Cash Flow Strategy", "Forecasting · Pay yourself consistently · Plan ahead"],
+    ["fractional CFO for law firms", "Law Firm CFO Services", "Profit per matter · Trust-accounting clarity"]
+  ],
+  "funnel_stages": [
+    ["292", "Clicks", "at ~$12 per click", 292],
+    ["12", "Leads", "4% of clicks", 12],
+    ["8", "Qualified", "70% of leads", 8],
+    ["7", "Showed calls", "85% book &amp; show", 7],
+    ["2", "New clients", "25% close rate", 2]
+  ]
+}
