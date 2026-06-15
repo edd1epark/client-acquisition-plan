@@ -1,0 +1,24 @@
+{
+  "slug": "cml",
+  "prospect": "CM Lifestyle Homes",
+  "card1_example": "Families near San Antonio ready to build a custom home this year",
+  "seo_example_term": "custom home builder san antonio",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it shows your team to a homeowner at the moment they type the need.",
+  "search_rows": [
+    ["energy efficient custom home builder san antonio", "Energy-Efficient Custom Homes", "Building science · Lower bills · Built to last"],
+    ["build on your own lot texas hill country", "Build On Your Lot", "Your land · Custom design · Hill Country"],
+    ["aging in place custom home design", "Aging-In-Place Homes", "Single-level · Accessible · Comfortable for life"]
+  ],
+  "scenario": {
+    "typical_label": "Typical Google Ads performance",
+    "system_label": "Client acquisition system",
+    "budget": "$3,500",
+    "multiplier_badge": "2.3×",
+    "stages": [
+      {"label": "Clicks", "t": 233, "t_note": "at ~$15 per click", "s": 292, "s_note": "at ~$12 per click", "badge": "+25%"},
+      {"label": "Leads", "t": 7, "t_note": "3% of clicks", "s": 12, "s_note": "4% of clicks", "badge": "3% → 4%"},
+      {"label": "Qualified", "t": 4, "t_note": "no filter - 60%", "s": 8, "s_note": "filtered - 70%", "badge": "60% → 70%"},
+      {"label": "Showed", "t": 3, "t_note": "75% book &amp; show", "s": 7, "s_note": "85% book &amp; show", "badge": "75% → 85%"}
+    ]
+  }
+}
