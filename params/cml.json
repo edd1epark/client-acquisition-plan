@@ -18,7 +18,7 @@
       {"label": "Clicks", "t": 233, "t_note": "at ~$15 per click", "s": 292, "s_note": "at ~$12 per click", "badge": "+25%"},
       {"label": "Leads", "t": 7, "t_note": "3% of clicks", "s": 12, "s_note": "4% of clicks", "badge": "3% → 4%"},
       {"label": "Qualified", "t": 4, "t_note": "no filter - 60%", "s": 8, "s_note": "filtered - 70%", "badge": "60% → 70%"},
-      {"label": "Showed", "t": 3, "t_note": "75% book &amp; show", "s": 7, "s_note": "85% book &amp; show", "badge": "75% → 85%"}
+      {"label": "Showed", "t": 3, "t_note": "75% book & show", "s": 7, "s_note": "85% book & show", "badge": "75% → 85%"}
     ]
   }
 }
