@@ -1,0 +1,20 @@
+{
+  "slug": "vt",
+  "prospect": "Vteam",
+  "card1_example": "Firm owners ready to outsource their bookkeeping this quarter",
+  "card1_body": "A firm doesn't hand over its books because an ad caught an owner mid-scroll. They switch when busy season or a resignation forces the search. These channels also need huge audiences, and 'owners ready to outsource accounting right now' is too small a slice to target.",
+  "seo_example_term": "outsourced bookkeeping services",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it puts Vteam in front of a firm the moment an owner or partner searches for help.",
+  "search_rows": [
+    ["outsourced bookkeeping for cpa firms", "Offshore Staff for CPA Firms", "White-label · QuickBooks/Xero · Scale fast"],
+    ["year-end accounts outsourcing uk", "UK Year-End Accounts", "IRIS/Sage · Compliance · On time"],
+    ["quickbooks bookkeeping outsourcing", "QuickBooks Bookkeeping", "Daily entries · Reconciliations · Reporting"]
+  ],
+  "funnel_stages": [
+    ["320", "Clicks", "at ~$14 per click", 320],
+    ["13", "Leads", "4% of clicks", 13],
+    ["9", "Qualified", "70% of leads", 9],
+    ["8", "Discovery calls", "85% book &amp; show", 8],
+    ["2", "New clients", "25% close rate", 2]
+  ]
+}
