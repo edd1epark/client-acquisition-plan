@@ -1,0 +1,20 @@
+{
+  "slug": "fp",
+  "prospect": "Fusionpact",
+  "card1_example": "CTOs whose Scala or AI system is breaking and who need a specialist this quarter",
+  "card1_body": "An enterprise doesn't switch engineering partners because an ad caught a CTO mid-scroll. They switch when a system breaks and they search for a fix. These channels also need huge audiences, and 'CTOs evaluating Scala partners right now' is too small a slice to target.",
+  "seo_example_term": "scala development company",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it puts Fusionpact in front of an engineering leader the moment they search for the fix.",
+  "search_rows": [
+    ["akka consulting for high-throughput systems", "Scala & Akka Engineering", "Event sourcing · Akka cluster · JVM at scale"],
+    ["hire senior scala engineers on contract", "Scala Talent, Placed", "Senior engineers · Contract or permanent · US/EU"],
+    ["agentic ai development for enterprise", "Agentic AI Development", "LLM pipelines · Multi-agent · Production-ready"]
+  ],
+  "funnel_stages": [
+    ["300", "Clicks", "at ~$20 per click", 300],
+    ["12", "Leads", "4% of clicks", 12],
+    ["8", "Qualified", "70% of leads", 8],
+    ["7", "Discovery calls", "85% book &amp; show", 7],
+    ["2", "New engagements", "25% close rate", 2]
+  ]
+}
