@@ -1,0 +1,20 @@
+{
+  "slug": "im",
+  "prospect": "IT Monks",
+  "card1_example": "Marketing leaders who need a WordPress agency for a project this quarter",
+  "card1_body": "A marketing team doesn't pick a WordPress agency because an ad caught them mid-scroll. They pick one when a rebrand, migration, or stuck launch forces the search. These channels also need huge audiences, and 'marketing leaders choosing an agency right now' is too small a slice to target.",
+  "seo_example_term": "wordpress development agency",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it puts IT Monks in front of a marketing leader the moment they search for an agency.",
+  "search_rows": [
+    ["headless wordpress development agency", "Headless WordPress", "REST API · Decoupled · Fast & flexible"],
+    ["woocommerce development agency", "WooCommerce Development", "Custom integrations · Stripe & Klarna · Scale"],
+    ["enterprise wordpress for publishers", "Publisher Platforms", "100k+ concurrent · VIP hosting · SEO"]
+  ],
+  "funnel_stages": [
+    ["350", "Clicks", "at ~$14 per click", 350],
+    ["14", "Leads", "4% of clicks", 14],
+    ["10", "Qualified", "70% of leads", 10],
+    ["8", "Discovery calls", "85% book &amp; show", 8],
+    ["2", "New projects", "25% close rate", 2]
+  ]
+}
