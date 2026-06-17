@@ -1,0 +1,13 @@
+{
+  "slug": "shq",
+  "prospect": "SignalsHQ",
+  "card1_example": "Partners at scaling tax firms evaluating AI tax software this quarter",
+  "card1_body": "A firm doesn't switch tax software because an ad caught a partner mid-scroll. They switch when a workflow breaks and they go searching. These channels also need huge audiences, and 'firms evaluating AI tax tools right now' is too small a slice to target.",
+  "seo_example_term": "AI tax software",
+  "card4_body": "The only channel that scores green on the requirement that matters most: it puts SignalsHQ in front of a firm the moment a partner types the problem into Google.",
+  "search_rows": [
+    ["AI tax research tool with IRS citations", "AI Tax Research", "Cited answers · Federal & SALT · 50 states"],
+    ["K-1 and 1099 data extraction software", "Document Automation", "Drag-drop intake · 95%+ extraction · Binders"],
+    ["AI tax planning software for advisory", "Advisory Engine", "Ranked opportunities · Cited · Client-ready"]
+  ]
+}
